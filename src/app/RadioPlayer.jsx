@@ -1,22 +1,23 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
-const RadioPlayer = () => {
-  const [isPlaying, setIsPlaying] = useState(false);
-
-  const togglePlay = () => {
-    setIsPlaying(!isPlaying);
-  };
+const RadioPlayer = ({ mixcloudData }) => {
+  useEffect(() => {
+    // mixcloudData should be passed as a prop from server-side data fetching
+    if (mixcloudData) {
+      const div = document.createElement("div");
+      div.innerHTML = mixcloudData.html;
+      document.getElementById("mixcloud-container").appendChild(div);
+    }
+  }, [mixcloudData]);
 
   return (
     <div>
       <h2>Radio Player</h2>
-      <iframe
-        width="100%"
-        height="60"
-        src="https://player-widget.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&light=1&feed=%2Fgifino%2Fdfg%2F"
-      ></iframe>
+      <div id="mixcloud-container">
+        {/* Mixcloud content will be embedded here */}
+      </div>
     </div>
   );
 };

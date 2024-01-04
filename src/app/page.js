@@ -1,11 +1,24 @@
 import React from "react";
 import RadioPlayer from "./RadioPlayer";
 
-export default function Home() {
+const getMix = async () => {
+  const mixcloudUrl = "https://www.mixcloud.com/gifino/testshow/";
+  const response = await fetch(
+    `https://www.mixcloud.com/oembed/?url=${encodeURIComponent(
+      mixcloudUrl
+    )}&format=json`
+  );
+  const mixcloudData = await response.json();
+  return mixcloudData;
+};
+
+export default async function Home() {
+  const mixCloud = await getMix();
+
   return (
     <main>
       Radio Playground
-      <RadioPlayer />
+      <RadioPlayer mixcloudData={mixCloud} />
     </main>
   );
 }
